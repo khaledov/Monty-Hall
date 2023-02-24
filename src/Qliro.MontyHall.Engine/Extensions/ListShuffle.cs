@@ -6,6 +6,11 @@ namespace Qliro.MontyHall.Engine.Extensions
     {
         private static Random rng = new Random();
 
+        /// <summary>
+        /// Shuffles the specified list.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="list">The list.</param>
         public static void Shuffle<T>(this IList<T> list)
         {
             int n = list.Count;

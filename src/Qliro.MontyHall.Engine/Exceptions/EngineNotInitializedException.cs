@@ -2,7 +2,7 @@
 {
     public class EngineNotInitializedException : Exception
     {
-        public EngineNotInitializedException(string msg):base(msg)
+        public EngineNotInitializedException(string msg) : base(msg)
         {
 
         }

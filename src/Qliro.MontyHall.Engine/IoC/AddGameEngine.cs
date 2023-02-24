@@ -1,12 +1,10 @@
 ﻿using MediatR;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
 using Qliro.MontyHall.Engine.Services;
 using Scrutor;
-using Serilog;
 using System.Reflection;
 
-namespace Qliro.MontyHall.Engine.Extensions
+namespace Qliro.MontyHall.Engine.IoC
 {
     public static class AddGameEngineEx
     {
@@ -18,7 +16,7 @@ namespace Qliro.MontyHall.Engine.Extensions
             };
             services.AddMediatR(config => config.RegisterServicesFromAssemblies(assemblies));
             services.AddScoped<IGameConsole, GameConsole>();
-           
+            services.AddLogging();
 
             services.Scan(scanner =>
               scanner.FromAssemblies(assemblies)

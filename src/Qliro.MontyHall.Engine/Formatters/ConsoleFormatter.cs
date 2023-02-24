@@ -1,15 +1,14 @@
 ﻿using Qliro.MontyHall.Engine.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Qliro.MontyHall.Engine.Formatters
 {
- 
-    public  class ConsoleFormatter
+
+    public class ConsoleFormatter
     {
+        const char _block = '■';
+        const string _back = "\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b";
+        const string _twirl = "-\\|/";
+
         public static void WriteWarning(string content)
         {
             Console.ForegroundColor = ConsoleColor.Cyan;
@@ -20,7 +19,7 @@ namespace Qliro.MontyHall.Engine.Formatters
         public static void WriteSpecial(string content)
         {
             Console.ForegroundColor = ConsoleColor.Green;
-            Console.WriteLine(content);
+            Console.Write(content +"\t\t\t");
             Console.ForegroundColor = ConsoleColor.Gray;
         }
 
@@ -28,12 +27,13 @@ namespace Qliro.MontyHall.Engine.Formatters
 
         public static void WriteResult(Statistics statistics)
         {
-           
+            Console.WriteLine();
+
             WriteInfo("Strategy", statistics.Strategy);
             WriteInfo("You have chosen to run engine", statistics.GamesCount.ToString() + " times.");
             WriteInfo("You wins", statistics.WinsCount.ToString());
-            WriteInfo("Win rate", statistics.WinsCount.ToString() +" %");
-          
+            WriteInfo("Win rate", statistics.Accuracy.ToString() + " %");
+
             Console.ForegroundColor = ConsoleColor.Gray;
         }
 
@@ -44,6 +44,7 @@ namespace Qliro.MontyHall.Engine.Formatters
             Console.ForegroundColor = ConsoleColor.Yellow;
             Console.Write(value + "\n");
         }
+       
         public static void WriteFailed(TimeSpan? time = null)
         {
             var elapsed = time.HasValue ? " - " + time.Value.TotalSeconds.ToString("F4") + "s" : "";
@@ -71,6 +72,30 @@ namespace Qliro.MontyHall.Engine.Formatters
             Console.WriteLine("(" + ex.GetType() + ") :\t" + ex.Message);
             Console.WriteLine();
             Console.ForegroundColor = ConsoleColor.Gray;
+        }
+
+
+
+        public static void WriteProgressBar(int percent, bool update = false)
+        {
+            if (update)
+                Console.Write(_back);
+            Console.Write("[");
+            var p = (int)((percent / 10f) + .5f);
+            for (var i = 0; i < 10; ++i)
+            {
+                if (i >= p)
+                    Console.Write(' ');
+                else
+                    Console.Write(_block);
+            }
+            Console.Write("] {0,3:##0}%", percent);
+        }
+        public static void WriteProgress(int progress, bool update = false)
+        {
+            if (update)
+                Console.Write("\b");
+            Console.Write(_twirl[progress % _twirl.Length]);
         }
     }
 }

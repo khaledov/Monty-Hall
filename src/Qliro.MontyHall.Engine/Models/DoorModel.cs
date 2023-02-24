@@ -8,7 +8,8 @@ namespace Qliro.MontyHall.Engine.Models
 
         public DoorState State { get; internal set; }
 
-        public DoorModel(string prize, DoorState state) {
+        public DoorModel(string prize, DoorState state)
+        {
             Prize = prize;
             State = state;
         }
